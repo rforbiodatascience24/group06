@@ -4,6 +4,12 @@
 
 ## Suka Blyat
 
+This is random text with some code.
+
+```{r}
+library("tidyverse")
+```
+
 ## Magdar det ikke
 
 ## 
