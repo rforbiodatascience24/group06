@@ -1,9 +1,13 @@
 ## Ingefaer
+```{r}
+Ingefaer <- 'Saxe'
+```
+
 
 ## Bysansvarlig
 
 ## Suka Blyat
 
 ## Magdar det ikke
-
+s
 ## 
