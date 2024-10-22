@@ -2,13 +2,24 @@
 
 ## Bysansvarlig
 
+Heya this is my lol
+
+```{r}
+1+1
+# Does this print 2? if so, you're in the Matrix
+print("Does this print 2? if so, you're in the Matrix")
+
+```
+
 ## Suka Blyat
 
 ## Magdar det ikke
+
 ```{r}
 library(tidyverse)
 
 ```
+
 ```{r}
 mpg |> 
 ggplot(mapping = aes(x = displ,
@@ -18,6 +29,5 @@ ggplot(mapping = aes(x = displ,
   theme_minimal()
 
 ```
-
 
 ## 
