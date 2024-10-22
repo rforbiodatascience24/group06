@@ -1,18 +1,11 @@
+
 ## Report
 
 ### Loading libraries
 
 ```{r}
-library("tidyverse")
-library("broom")
-library("cowplot")
-```
-
-### Loading data
-
 We load the data directly from the URL
-
-```{r}
+{r}
 #Read and save data to 'biopsy'
 biopsy <- read_csv(file = "https://wilkelab.org/classes/SDS348/data_sets/biopsy.csv")
 ```
@@ -28,37 +21,3 @@ In general, when performing PCA, we’ll want to do (at least) three things:
 3.  Look at the variance explained by each PC.
 
 Let’s do these three things in turn.
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
-
-```
