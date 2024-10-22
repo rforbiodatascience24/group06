@@ -6,6 +6,15 @@ Ingefaer <- 'Saxe'
 
 ## Bysansvarlig
 
+Heya this is my lol
+
+```{r}
+1+1
+# Does this print 2? if so, you're in the Matrix
+print("Does this print 2? if so, you're in the Matrix")
+
+```
+
 ## Suka Blyat
 
 This is random text with some code.
