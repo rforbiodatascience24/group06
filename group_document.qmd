@@ -2,6 +2,14 @@
 
 ```{r}
 Ingefaer <- 'Saxe'
+
+
+```
+
+```{r}
+#New feature
+
+spice <- 'ingefaer'
 ```
 
 ## Bysansvarlig
@@ -15,12 +23,32 @@ print("Does this print 2? if so, you're in the Matrix")
 
 ```
 
+#### Subsection - branching off les go
+
+```{r}
+print("Let me get you a random number")
+s <- sample(1:1000,1)
+print(s)
+print("Which number did you get?")
+print("If you got")
+s
+print("then you will pee your pants tonight")
+```
+
 ## Suka Blyat
 
 This is random text with some code.
 
 ```{r}
 library("tidyverse")
+```
+
+### New feature
+
+```{r}
+numbers_to_ten <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+numbers_to_ten %>% median() %>% print()
+
 ```
 
 ## Magdar det ikke
@@ -40,4 +68,14 @@ ggplot(mapping = aes(x = displ,
 
 ```
 
-## 
+## New Feature by magdar
+
+Hi there, how are you today. Look at my pretty plot:
+
+```{r}
+mpg |> 
+  ggplot(mapping = aes(x = displ,
+                       color = manufacturer))+
+  geom_boxplot()+
+  labs(title = "Plz admit this plot is pretty cool")
+```
