@@ -1,4 +1,5 @@
 ## Ingefaer
+
 ```{r}
 Ingefaer <- 'Saxe'
 ```
@@ -12,6 +13,18 @@ Heya this is my lol
 # Does this print 2? if so, you're in the Matrix
 print("Does this print 2? if so, you're in the Matrix")
 
+```
+
+#### Subsection - branching off les go
+
+```{r}
+print("Let me get you a random number")
+s <- sample(1:1000,1)
+print(s)
+print("Which number did you get?")
+print("If you got")
+s
+print("then you will pee your pants tonight")
 ```
 
 ## Suka Blyat
