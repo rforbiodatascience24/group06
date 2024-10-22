@@ -9,7 +9,11 @@ Top 10 Bio Data Science Languages of ALL Time:
 3. different
 2. tastes
 <<<<<<< HEAD
+<<<<<<< HEAD
 1. Python sucks
 =======
 1. hrghkergsenrglksejrgbselrkjgesrkljgnselkrjgnsegjeslr
 >>>>>>> a85ce894909d4c35e0ff699220963467da3e2764
+=======
+1. R is superior!
+>>>>>>> ac9de19ef6045e6318662364734f835bc89a0341
