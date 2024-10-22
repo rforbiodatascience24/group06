@@ -1,4 +1,7 @@
 ## Ingefaer
+```{r}
+Ingefaer <- 'Saxe'
+```
 
 ## Bysansvarlig
 
@@ -12,6 +15,12 @@ print("Does this print 2? if so, you're in the Matrix")
 ```
 
 ## Suka Blyat
+
+This is random text with some code.
+
+```{r}
+library("tidyverse")
+```
 
 ## Magdar det ikke
 
