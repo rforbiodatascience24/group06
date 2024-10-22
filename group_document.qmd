@@ -1,4 +1,5 @@
 ## Ingefaer
+
 ```{r}
 Ingefaer <- 'Saxe'
 ```
@@ -39,4 +40,14 @@ ggplot(mapping = aes(x = displ,
 
 ```
 
-## 
+## New Feature by magdar
+
+Hi there, how are you today. Look at my pretty plot:
+
+```{r}
+mpg |> 
+  ggplot(mapping = aes(x = displ,
+                       color = manufacturer))+
+  geom_boxplot()+
+  labs(title = "Plz admit this plot is pretty cool")
+```
