@@ -1,6 +1,6 @@
 ## Report
 
-Load libraries
+### Loading libraries
 
 ```{r}
 library("tidyverse")
@@ -8,9 +8,26 @@ library("broom")
 library("cowplot")
 ```
 
-```{r}
+### Loading data
 
+We load the data directly from the URL
+
+```{r}
+#Read and save data to 'biopsy'
+biopsy <- read_csv(file = "https://wilkelab.org/classes/SDS348/data_sets/biopsy.csv")
 ```
+
+### Performing PCA
+
+In general, when performing PCA, we’ll want to do (at least) three things:
+
+1.  Look at the data in PC coordinates.
+
+2.  Look at the rotation matrix.
+
+3.  Look at the variance explained by each PC.
+
+Let’s do these three things in turn.
 
 ```{r}
 
