@@ -11,10 +11,12 @@ library("tidyverse")
 ```
 
 ## Magdar det ikke
+
 ```{r}
 library(tidyverse)
 
 ```
+
 ```{r}
 mpg |> 
 ggplot(mapping = aes(x = displ,
@@ -24,6 +26,5 @@ ggplot(mapping = aes(x = displ,
   theme_minimal()
 
 ```
-
 
 ## 
