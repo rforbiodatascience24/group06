@@ -121,7 +121,7 @@ pca_fit |>
 
 ```
 
-##  Look at the variance explained by each PC
+## Look at the variance explained by each PC
 
 \##
 
@@ -144,6 +144,7 @@ pca_fit |>
        )+
   theme_minimal()+
   theme(panel.grid.minor = element_blank())
+
   
  
 ```
