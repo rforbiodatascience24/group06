@@ -1,5 +1,15 @@
 ## Report
 
+#### Group members
+
+| Name                  | ID      |
+|-----------------------|---------|
+| Arne Hellhund         | arnhell |
+| Magdalena Dzierzynska | s194428 |
+| Lasse Buhl            | s215025 |
+| Saxe Wagner           | s204559 |
+| Antonio Mocinic       | s243171 |
+
 Load libraries
 
 ```{r}
