@@ -8,15 +8,15 @@ editor: visual
 ---
 ```
 
-## Group members 
+## Group members
 
-| Name                  | ID      |
-|-----------------------|---------|
-| Arne Hellhund         | arnhell |
-| Magdalena Dzierzynska | s194428 |
-| Lasse Buhl            | s215025 |
-| Saxe Wagner           | s204559 |
-| Antonio Mocinic       | s243171 |
+| Name                  | ID              |
+|-----------------------|-----------------|
+| Arne Hellhund         | arnhell         |
+| Magdalena Dzierzynska | s194428         |
+| Lasse Buhl            | s215025         |
+| Saxe Wagner           | s204559 / sidwa |
+| Antonio Mocinic       | s243171         |
 
 # Microreport
 
@@ -34,7 +34,7 @@ library("cowplot")
 
 ## Loading data from Biopsy Dataset
 
-We’ll be analyzing the `biopsy` dataset, which comes originally from the MASS package. It is a breast cancer dataset from the University of Wisconsin Hospitals, Madison from Dr. William H. Wolberg. The data consists of 683 observations (rows) and 10 variables (columns), and it appears to be a tidy dataset.
+We’ll be analyzing the `biopsy` dataset, which comes originally from the MASS package. It is a breast cancer dataset from the University of Wisconsin Hospitals, Madison from Dr. William H. Wolberg. The data consists of 683 observations (rows) and 10 variables (columns), and it appears to be a tidy dataset. A notable data wrangling option would be to convert outcome from strings ('benign'/'malignant') to a binary integer/float. This is not necessary for our data analysis however.
 
 ```{r}
 #Read and save data to 'biopsy'
@@ -48,7 +48,7 @@ We start by running the PCA using the built-in function in R `prcomp()` and stor
 ```{r}
 pca_fit <- biopsy |> 
   select(where(is.numeric)) |> # retain only numeric columns
-  prcomp(scale = TRUE) # do PCA on scaled data
+  prcomp(scale = TRUE,center=TRUE) # do PCA on scaled (and centered) data
 ```
 
 ## Look at the data in Principal Component coordinates
@@ -64,7 +64,9 @@ pca_fit |>
     values = c(malignant = "#D55E00", benign = "#0072B2")
   ) +
   theme_half_open(12) + background_grid()+
-  labs(title = "Principal Component Coordinates of Biopsy Data")
+  labs(title = "Principal Component Coordinates of Biopsy Data",
+       x = "PC1",
+       y = "PC2")
 ```
 
 ## Store the Rotation Matrix in a New Variable
@@ -129,7 +131,9 @@ pca_fit_eigenvalues |>
     expand = expansion(mult = c(0,0.01))
   )+
   theme_minimal_hgrid(12)+
-  labs(title = "Variance Explained by Each Principal Component of Biopsy Data")
+  labs(title = "Fraction of variance by Each PC of Biopsy Data",
+       x = "Principal component #",
+       y = "Variance share")
 ```
 
 ## Cumulative variance explained in PCA
@@ -145,7 +149,7 @@ pca_fit_eigenvalues |>
    scale_y_continuous(labels = scales::label_percent())+
   geom_hline(yintercept = 0.9, linetype="dashed", color="orange", size = 1)+
   labs(title = "Cumulative variance explained in PCA",
-       x = "PCA components",
+       x = "PCA Principal components",
        y = "cumulative variance"
        )+
   theme_minimal_hgrid(12)+
