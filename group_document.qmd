@@ -8,7 +8,7 @@ editor: visual
 ---
 ```
 
-#### Group members
+## Group members 
 
 | Name                  | ID      |
 |-----------------------|---------|
@@ -18,15 +18,11 @@ editor: visual
 | Saxe Wagner           | s204559 |
 | Antonio Mocinic       | s243171 |
 
-## Microreport
+# Microreport
 
-This report follows a code-along from this [post on PCA in tidyverse](https://clauswilke.com/blog/2020/09/07/pca-tidyverse-style/).
+This report follows a code-along from this [post on PCA in tidyverse](https://clauswilke.com/blog/2020/09/07/pca-tidyverse-style/). Some of the text in this report is directly copied from the blog post. The purpose of the blogpost is to show how the output of the built-in Principal Component Analysis function in base R `prcomp()` can be made compatible with tidyverse. Then plots are created of PC coordinates, rotation matrix, variance explained and cumulative variance explained.
 
-The following is copied directly from the above linked post.
-
-Doing a PCA in R is easy: Just run the function `prcomp()` on your matrix of scaled numeric predictor variables. There’s just one problem, however. The result is an object of class `prcomp` that doesn’t fit nicely into the tidyverse framework, e.g. for visualization. While it’s reasonably easy to extract the relevant info with [some base-R manipulations,](https://wilkelab.org/classes/SDS348/2020_spring/worksheets/class9_solutions.html) I’ve never been happy with this approach. But now, I’ve realized that all the necessary functions to do this tidyverse-style are available in the broom package.
-
-### Loading libraries
+## Loading libraries
 
 ```{r, message=FALSE, running=FALSE}
 library("tidyverse")
@@ -36,30 +32,18 @@ library("broom")
 library("cowplot")
 ```
 
-#We’ll be analyzing the `biopsy` dataset, which comes originally from the MASS package. It is a breast cancer dataset from the University of Wisconsin Hospitals, Madison from Dr. William H. Wolberg. He assessed biopsies of breast tumors for 699 patients; each of nine attributes was scored on a scale of 1 to 10. The true outcome (benign/malignant) is also known.
+## Loading data from Biopsy Dataset
 
-### Loading data from url
+We’ll be analyzing the `biopsy` dataset, which comes originally from the MASS package. It is a breast cancer dataset from the University of Wisconsin Hospitals, Madison from Dr. William H. Wolberg. The data consists of 683 observations (rows) and 10 variables (columns), and it appears to be a tidy dataset.
 
 ```{r}
 #Read and save data to 'biopsy'
 biopsy <- read_csv(file = "https://wilkelab.org/classes/SDS348/data_sets/biopsy.csv")
 ```
 
-### Performing PCA
+## Running the PCA and storing it in a new Variable
 
-In general, when performing PCA, we’ll want to do (at least) three things:
-
-1.  Look at the data in PC coordinates.
-
-2.  Look at the rotation matrix.
-
-3.  Look at the variance explained by each PC.
-
-Let’s do these three things in turn.
-
-## Look at the data in PC coordinates
-
-We start by running the PCA and storing the result in a variable `pca_fit`. All non-numeric columns are removed using `where(is.numeric)`, since the `prcomp()` function can only deal with numeric columns. Prior to running PCA, the data values are scaled to unit variance, using the argument `scale = TRUE` in `prcomp()`.
+We start by running the PCA using the built-in function in R `prcomp()` and storing it in a new variable `pca_fit`\`after removing all non-numeric columns using `where(is.numeric).` Prior to running PCA, the data values are scaled to unit variance, using the argument `scale = TRUE` in `prcomp()`.
 
 ```{r}
 pca_fit <- biopsy |> 
@@ -67,7 +51,9 @@ pca_fit <- biopsy |>
   prcomp(scale = TRUE) # do PCA on scaled data
 ```
 
-The PCs are plotted, by combining the PCs with the original dataset, allowing us to stratefy the PCs by color to categorical variables. The function `augment()` from broom takes the fitted model and the original data as arguments, combining the two datasets. The columns containing the fitted coordinates are called `.fittedPC1`, `.fittedPC2`, etc.
+## Look at the data in Principal Component coordinates
+
+The PCs are plotted, by combining the PCs with the original dataset, allowing us to stratify the PCs by color to categorical variables. The function `augment()` from broom takes the fitted model and the original data as arguments, combining the two datasets. The columns containing the fitted coordinates are called `.fittedPC1`, `.fittedPC2`, etc.
 
 ```{r}
 pca_fit |> 
@@ -77,22 +63,24 @@ pca_fit |>
   scale_color_manual(
     values = c(malignant = "#D55E00", benign = "#0072B2")
   ) +
-  theme_half_open(12) + background_grid()
+  theme_half_open(12) + background_grid()+
+  labs(title = "Principal Component Coordinates of Biopsy Data")
 ```
 
-## Look at the data in PC coordinates
+## Store the Rotation Matrix in a New Variable
 
-The rotation matrix is stored as `pca_fit$rotation`
-
-Next, we plot the rotation matrix. The rotation matrix is stored as 'rotation' in the 'pca_fit' tibble. The matrix is extracted using the `tidy()` function from broom. When applied to `prcomp` objects, the `tidy()` function takes an additional argument `matrix`, which is set to `matrix = "rotation"` to extract the rotation matrix.
+The rotation matrix is stored as `pca_fit$rotation` when using the built in R function `prcomp`. To make it compatible with tidyverse we extract the rotation matrix using the `tidy()` function from broom. When applied to `prcomp` objects, the `tidy()` function takes an additional argument `matrix`, which is set to `matrix = "rotation"` to extract the rotation matrix. Some data wrangling is also needed so we pivot wider the dataset.
 
 ```{r}
-# extract rotation matrix
-pca_fit |> 
-  tidy(matrix = "rotation")
+# extract rotation matrix and store it in a new variable pca_fit_rotation
+pca_fit_rotation <- pca_fit |> 
+  tidy(matrix = "rotation") |> 
+  pivot_wider(names_from = "PC",
+              names_prefix = "PC",
+              values_from = "value")
 ```
 
-Now in the context of a plot:
+## Plotting the Rotation matrix
 
 ```{r}
 # define arrow style for plotting
@@ -102,12 +90,8 @@ arrow_style <- arrow(angle = 20,
                      length = grid::unit(8, "pt")
 )
 
-# plot rotation matrix
-pca_fit |> 
-  tidy(matrix = "rotation") |> 
-  pivot_wider(names_from = "PC",
-              names_prefix = "PC",
-              values_from = "value") |> 
+# plot rotation matrix by calling our variable
+pca_fit_rotation |> 
   ggplot(aes(PC1, PC2)) +
   geom_segment(xend = 0,
                yend = 0,
@@ -119,21 +103,41 @@ pca_fit |>
   ) +
   xlim(-1.25, .5) + ylim(-.5, 1) +
   coord_fixed() + # fix aspect ratio to 1:1
-  theme_minimal_grid(12)
+  theme_minimal_grid(12)+
+  labs(title = "Rotation Matrix from PCA of Biopsy Data")
 
+```
+
+## Store the Eigenvalues in a New Variable
+
+The Eigenvalues are are stored as `pca_fit$eigenvalues` when using the built in R function `prcomp`. To make it compatible with tidyverse we extract the eigenvalues using the `tidy()` function from broom and store it in a new variable.
+
+```{r}
+pca_fit_eigenvalues <- pca_fit |> 
+  tidy(matrix = "eigenvalues")
 ```
 
 ## Look at the variance explained by each PC
 
-\##
+```{r}
+pca_fit_eigenvalues |> 
+  ggplot(aes(PC, percent))+
+  geom_col(fill = "blue", alpha = 0.5)+
+  scale_x_continuous(breaks = 1:9)+
+  scale_y_continuous(
+    labels = scales::percent_format(),
+    expand = expansion(mult = c(0,0.01))
+  )+
+  theme_minimal_hgrid(12)+
+  labs(title = "Variance Explained by Each Principal Component of Biopsy Data")
+```
 
 ## Cumulative variance explained in PCA
 
 Now, we are going to plot a cumulative variance plot. It explains how much of the variation in the data is captured within the first *x* components. A threshold of 90% is often used to make a reduction in dimensionality without losing too much information. 
 
 ```{r}
-pca_fit |>
-  tidy(matrix = "eigenvalues") |> 
+pca_fit_eigenvalues |>
   ggplot(aes(x = PC, y = cumulative ))+
   geom_point()+
   geom_line()+
@@ -144,7 +148,7 @@ pca_fit |>
        x = "PCA components",
        y = "cumulative variance"
        )+
-  theme_minimal()+
+  theme_minimal_hgrid(12)+
   theme(panel.grid.minor = element_blank())
 
   
